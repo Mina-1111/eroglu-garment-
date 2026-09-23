@@ -355,6 +355,17 @@ export default function App() {
               </>
             )}
 
+            {/* View Tab: Manager Boardroom Dossier & Print */}
+            {activeTab === 'dossier' && (
+              <PowerBIPrintReport
+                dataset={dataset}
+                filteredRows={filteredRows}
+                filteredRowCount={filteredRows.length}
+                filters={filters}
+                onBack={() => setActiveTab('dashboard')}
+              />
+            )}
+
             {/* View Tab 2: Executive Leadership Scorecard & Plant Health */}
             {activeTab === 'briefing' && (
               <ExecutiveBriefingScorecard

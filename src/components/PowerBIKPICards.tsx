@@ -122,8 +122,8 @@ export function PowerBIKPICards({
   return (
     <div className="space-y-3">
       
-      {/* 5 Executive KPI Metric Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5">
+      {/* 4 Executive KPI Metric Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
         
         {/* Card 1: Headcount */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs relative overflow-hidden group hover:border-amber-400 transition">
@@ -160,7 +160,7 @@ export function PowerBIKPICards({
               </span>
             </div>
             <div className="mt-1.5 text-[11px] text-slate-500 truncate font-mono">
-              Avg: ${(cardMetrics.totalCount > 0 ? (cardMetrics.totalSalary / cardMetrics.totalCount).toFixed(0) : 0).toLocaleString()} / person
+              Total Payroll Allocated
             </div>
           </div>
         ) : (
@@ -202,37 +202,14 @@ export function PowerBIKPICards({
             <span className="text-[11px] text-slate-500 font-medium">hrs</span>
           </div>
           <div className="mt-1.5 flex items-center justify-between text-[11px] text-slate-500 font-mono">
-            <span>Avg: {cardMetrics.totalCount > 0 ? (cardMetrics.sumTotalHours / cardMetrics.totalCount).toFixed(1) : 0} h/person</span>
+            <span>Plant-wide Aggregate</span>
             {cardMetrics.sumOvertimeHours > 0 && (
-              <span className="text-amber-600 font-bold">OT: {cardMetrics.sumOvertimeHours.toLocaleString('en-US')}h</span>
+              <span className="text-amber-600 font-bold">OT: +{cardMetrics.sumOvertimeHours.toLocaleString('en-US')}h</span>
             )}
           </div>
         </div>
 
-        {/* Card 4: Performance / Efficiency Score */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs relative overflow-hidden group hover:border-indigo-400 transition">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-indigo-500"></div>
-          <div className="flex items-center justify-between text-slate-500 mb-1.5">
-            <span className="text-xs font-semibold truncate" title={cardMetrics.rateCol?.name || 'Operational Efficiency'}>
-              {cardMetrics.rateCol ? cardMetrics.rateCol.name : 'Efficiency Rate'}
-            </span>
-            <Activity className="w-4 h-4 text-indigo-500" />
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-black text-slate-900 font-mono">
-              {cardMetrics.avgRate > 0 ? `${cardMetrics.avgRate}%` : '98.5%'}
-            </span>
-          </div>
-          <div className="mt-1.5 text-[11px] text-slate-500">
-            {cardMetrics.avgRate >= 90 ? (
-              <span className="text-emerald-600 font-semibold font-mono">Target Exceeded (+2.4%)</span>
-            ) : (
-              <span className="text-slate-500 font-mono">Standard Operating Range</span>
-            )}
-          </div>
-        </div>
-
-        {/* Card 5: Departmental Units */}
+        {/* Card 4: Departmental Units */}
         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs relative overflow-hidden group hover:border-violet-400 transition">
           <div className="absolute top-0 left-0 right-0 h-1 bg-violet-500"></div>
           <div className="flex items-center justify-between text-slate-500 mb-1.5">

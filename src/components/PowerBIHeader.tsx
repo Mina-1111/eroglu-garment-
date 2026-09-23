@@ -13,10 +13,11 @@ import {
   Tv,
   Sparkles,
   GitCompare,
+  FileText,
 } from 'lucide-react';
 import { UniversalDataset } from '../types/powerbi';
 
-export type HeaderTab = 'dashboard' | 'briefing' | 'simulator' | 'benchmarking' | 'matrix' | 'builder';
+export type HeaderTab = 'dashboard' | 'dossier' | 'briefing' | 'simulator' | 'benchmarking' | 'matrix' | 'builder';
 
 interface PowerBIHeaderProps {
   dataset: UniversalDataset;
@@ -216,7 +217,21 @@ export function PowerBIHeader({
               <span>Executive Dashboard</span>
             </button>
 
-            {/* Tab 2: Leadership Scorecard & Health */}
+            {/* Tab 2: Manager Boardroom Dossier & Print */}
+            <button
+              id="tab-dossier"
+              onClick={() => setActiveTab('dossier')}
+              className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition cursor-pointer ${
+                activeTab === 'dossier'
+                  ? 'bg-amber-400 text-slate-950 font-black shadow-xs'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 font-medium'
+              }`}
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Manager Boardroom Pack</span>
+            </button>
+
+            {/* Tab 3: Leadership Scorecard & Health */}
             <button
               id="tab-briefing"
               onClick={() => setActiveTab('briefing')}

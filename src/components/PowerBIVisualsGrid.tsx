@@ -464,7 +464,6 @@ export function PowerBIVisualsGrid({
                                 <p>• Total Working Hours: <strong className="text-sky-300 font-mono">{d.totalWorkingHours.toLocaleString('en-US')} hrs</strong></p>
                                 <p>• Regular Base Hours: <strong className="text-slate-300 font-mono">{d.regularHours.toLocaleString('en-US')} hrs</strong></p>
                                 <p>• Overtime Hours: <strong className="text-amber-300 font-mono">{d.overtimeHours.toLocaleString('en-US')} hrs</strong></p>
-                                <p>• Average Hours/Person: <strong className="text-emerald-300 font-mono">{d.avgHoursPerPerson} hrs</strong></p>
                               </div>
                             </div>
                           );
@@ -729,9 +728,7 @@ export function PowerBIVisualsGrid({
                   <th className="p-2.5 text-right">Total Hours</th>
                   <th className="p-2.5 text-right">Regular Hours</th>
                   <th className="p-2.5 text-right">Overtime</th>
-                  <th className="p-2.5 text-right">Avg Hrs/Person</th>
                   {hasSalary && <th className="p-2.5 text-right">Total Payroll</th>}
-                  <th className="p-2.5 text-right">Avg Efficiency</th>
                   <th className="p-2.5 text-center">Cross-Filter</th>
                 </tr>
               </thead>
@@ -762,17 +759,11 @@ export function PowerBIVisualsGrid({
                       <td className="p-2.5 text-right font-mono font-semibold text-amber-700">
                         {dept.overtimeHours > 0 ? `+${dept.overtimeHours.toLocaleString('en-US')} hrs` : '-'}
                       </td>
-                      <td className="p-2.5 text-right font-mono text-slate-700">
-                        {dept.avgHoursPerPerson} h
-                      </td>
                       {hasSalary && (
                         <td className="p-2.5 text-right font-mono text-emerald-700">
                           ${dept.totalSalary.toLocaleString('en-US')}
                         </td>
                       )}
-                      <td className="p-2.5 text-right font-mono text-indigo-700">
-                        {dept.avgEfficiency > 0 ? `${dept.avgEfficiency}%` : 'N/A'}
-                      </td>
                       <td className="p-2.5 text-center">
                         <button
                           type="button"
@@ -808,24 +799,11 @@ export function PowerBIVisualsGrid({
                   <td className="p-2.5 text-right font-mono text-amber-800">
                     +{departmentSummaries.reduce((sum, d) => sum + d.overtimeHours, 0).toLocaleString('en-US')} hrs
                   </td>
-                  <td className="p-2.5 text-right font-mono text-slate-800">
-                    {filteredRows.length > 0
-                      ? (departmentSummaries.reduce((sum, d) => sum + d.totalWorkingHours, 0) / filteredRows.length).toFixed(1)
-                      : 0} h
-                  </td>
                   {hasSalary && (
                     <td className="p-2.5 text-right font-mono text-emerald-800">
                       ${departmentSummaries.reduce((sum, d) => sum + d.totalSalary, 0).toLocaleString('en-US')}
                     </td>
                   )}
-                  <td className="p-2.5 text-right font-mono text-indigo-800">
-                    {(() => {
-                      const effs = departmentSummaries.filter(d => d.avgEfficiency > 0);
-                      return effs.length > 0
-                        ? `${(effs.reduce((sum, d) => sum + d.avgEfficiency, 0) / effs.length).toFixed(1)}%`
-                        : 'N/A';
-                    })()}
-                  </td>
                   <td className="p-2.5 text-center text-slate-400 text-[10px]">Audit Verified</td>
                 </tr>
               </tfoot>
