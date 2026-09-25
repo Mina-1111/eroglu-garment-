@@ -144,68 +144,45 @@ export function PowerBIKPICards({
           </div>
         </div>
 
-        {/* Card 2: Total Payroll (only if real salary exists) OR Base Regular Hours (if no salary provided) */}
-        {cardMetrics.hasSalary && cardMetrics.salaryCol ? (
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs relative overflow-hidden group hover:border-emerald-400 transition">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500"></div>
-            <div className="flex items-center justify-between text-slate-500 mb-1.5">
-              <span className="text-xs font-bold text-emerald-800 truncate" title={cardMetrics.salaryCol.name}>
-                Total Payroll ({cardMetrics.salaryCol.name})
-              </span>
-              <DollarSign className="w-4 h-4 text-emerald-600" />
-            </div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-black text-slate-900 font-mono truncate">
-                ${cardMetrics.totalSalary.toLocaleString('en-US')}
-              </span>
-            </div>
-            <div className="mt-1.5 text-[11px] text-slate-500 truncate font-mono">
-              Total Payroll Allocated
-            </div>
-          </div>
-        ) : (
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs relative overflow-hidden group hover:border-emerald-400 transition">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500"></div>
-            <div className="flex items-center justify-between text-slate-500 mb-1.5">
-              <span className="text-xs font-bold text-emerald-800 truncate">
-                Regular Base Hours
-              </span>
-              <Clock className="w-4 h-4 text-emerald-600" />
-            </div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-black text-slate-900 font-mono truncate">
-                {cardMetrics.sumRegularHours.toLocaleString('en-US')}
-              </span>
-              <span className="text-[11px] text-slate-500 font-medium">hrs</span>
-            </div>
-            <div className="mt-1.5 text-[11px] text-slate-500 truncate font-mono">
-              {cardMetrics.sumOvertimeHours > 0 ? (
-                <span className="text-amber-700 font-medium">Overtime: +{cardMetrics.sumOvertimeHours.toLocaleString('en-US')}h</span>
-              ) : (
-                <span>100% Standard Schedule</span>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Card 3: Exact Total Working Hours */}
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs relative overflow-hidden group hover:border-sky-400 transition">
-          <div className="absolute top-0 left-0 right-0 h-1 bg-sky-500"></div>
+        {/* Card 2: Regular Base Working Hours (Operational - No salary or money) */}
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs relative overflow-hidden group hover:border-emerald-400 transition">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-500"></div>
           <div className="flex items-center justify-between text-slate-500 mb-1.5">
-            <span className="text-xs font-semibold">Total Working Hours</span>
-            <Clock className="w-4 h-4 text-sky-500" />
+            <span className="text-xs font-bold text-emerald-800 truncate">
+              Regular Base Hours
+            </span>
+            <Clock className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-black text-slate-900 font-mono">
-              {cardMetrics.sumTotalHours.toLocaleString('en-US')}
+            <span className="text-2xl font-black text-slate-900 font-mono truncate">
+              {cardMetrics.sumRegularHours.toLocaleString('en-US')}
+            </span>
+            <span className="text-[11px] text-slate-500 font-medium">hrs</span>
+          </div>
+          <div className="mt-1.5 text-[11px] text-slate-500 truncate font-mono">
+            {cardMetrics.sumOvertimeHours > 0 ? (
+              <span className="text-amber-700 font-medium">Overtime: +{cardMetrics.sumOvertimeHours.toLocaleString('en-US')}h</span>
+            ) : (
+              <span>100% Standard Schedule</span>
+            )}
+          </div>
+        </div>
+
+        {/* Card 3: Total Overtime Hours */}
+        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs relative overflow-hidden group hover:border-amber-400 transition">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-amber-500"></div>
+          <div className="flex items-center justify-between text-slate-500 mb-1.5">
+            <span className="text-xs font-semibold">Total Overtime Hours</span>
+            <Clock className="w-4 h-4 text-amber-500" />
+          </div>
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-2xl font-black text-amber-800 font-mono">
+              +{cardMetrics.sumOvertimeHours.toLocaleString('en-US')}
             </span>
             <span className="text-[11px] text-slate-500 font-medium">hrs</span>
           </div>
           <div className="mt-1.5 flex items-center justify-between text-[11px] text-slate-500 font-mono">
-            <span>Plant-wide Aggregate</span>
-            {cardMetrics.sumOvertimeHours > 0 && (
-              <span className="text-amber-600 font-bold">OT: +{cardMetrics.sumOvertimeHours.toLocaleString('en-US')}h</span>
-            )}
+            <span>Plant-wide Overtime Volume</span>
           </div>
         </div>
 

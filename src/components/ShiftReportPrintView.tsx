@@ -149,20 +149,28 @@ export function ShiftReportPrintView({
         </div>
       </div>
 
-      {/* Official Signatures & Verification */}
-      <div className="pt-8 mt-10 border-t-2 border-slate-300 grid grid-cols-3 gap-6 text-center text-xs">
+      {/* Official Signatures & Verification (Mina Rafat / Marwa Ramadan / Bora Ertürk) */}
+      <div className="pt-8 mt-10 border-t-2 border-slate-300 grid grid-cols-3 gap-6 text-center text-xs page-break-inside-avoid">
         <div>
-          <span className="block font-semibold text-slate-600 mb-8">Audited By: Systems Engineering</span>
-          <span className="font-bold text-slate-950 block">Software Engineering / Mina Rafat</span>
+          <span className="block font-bold text-slate-500 mb-6 uppercase tracking-wider text-[11px]">DATA ANALYST</span>
+          <div className="border-t-2 border-slate-900 pt-2 max-w-[180px] mx-auto">
+            <span className="font-black text-slate-950 block text-xs uppercase tracking-wide">MINA RAFAT</span>
+            <span className="text-[10px] text-slate-600 block uppercase mt-0.5">Data Analyst</span>
+          </div>
         </div>
         <div>
-          <span className="block font-semibold text-slate-600 mb-8">Approved By: Operations Lead</span>
-          <span className="font-bold text-slate-950 block">Mina Rafat</span>
-          <span className="text-[10px] text-slate-500">Lead Systems Engineer</span>
+          <span className="block font-bold text-slate-500 mb-6 uppercase tracking-wider text-[11px]">HR MANAGER</span>
+          <div className="border-t-2 border-slate-900 pt-2 max-w-[180px] mx-auto">
+            <span className="font-black text-slate-950 block text-xs uppercase tracking-wide">MARWA RAMADAN</span>
+            <span className="text-[10px] text-slate-600 block uppercase mt-0.5">HR Manager</span>
+          </div>
         </div>
         <div>
-          <span className="block font-semibold text-slate-600 mb-8">Verification Seal: Enterprise Audit</span>
-          <span className="font-bold text-slate-950 block">Audit Verified & Reconciled</span>
+          <span className="block font-bold text-slate-500 mb-6 uppercase tracking-wider text-[11px]">HR GROUP MANAGER</span>
+          <div className="border-t-2 border-slate-900 pt-2 max-w-[180px] mx-auto">
+            <span className="font-black text-slate-950 block text-xs uppercase tracking-wide">BORA ERTÜRK</span>
+            <span className="text-[10px] text-slate-600 block uppercase mt-0.5">HR Group Manager</span>
+          </div>
         </div>
       </div>
 

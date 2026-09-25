@@ -252,7 +252,7 @@ export function generateSmartFactoryAlerts(employees: Employee[]): SmartAlert[] 
       id: 'absentee-warning',
       type: 'info',
       title: `Repeated Absence Follow-up (${highAbsentCount} staff)`,
-      message: `${highAbsentCount} operators exceeded 4 days of unscheduled absence this cycle.`,
+      message: `${highAbsentCount} operators exceeded 4 days of unscheduled absence this schedule.`,
       recommendation: `Schedule HR counseling sessions to address transit or health obstacles.`,
       impactScore: 'Floor discipline',
     });

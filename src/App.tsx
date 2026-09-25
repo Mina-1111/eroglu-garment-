@@ -20,6 +20,7 @@ import { ExecutiveBriefingScorecard } from './components/ExecutiveBriefingScorec
 import { ExecutiveScenarioSimulator } from './components/ExecutiveScenarioSimulator';
 import { ExecutiveBenchmarking } from './components/ExecutiveBenchmarking';
 import { ExecutiveKioskPresentation } from './components/ExecutiveKioskPresentation';
+import { ExecutiveBoardroomDashboard } from './components/ExecutiveBoardroomDashboard';
 import { Upload, FileSpreadsheet, RotateCcw, Table, Filter, ArrowUp, X, Tv } from 'lucide-react';
 
 const STORAGE_KEY_DATASET = 'mina_rafat_analytics_dataset_v3';
@@ -41,8 +42,8 @@ export default function App() {
     return getInitialGarmentDataset();
   });
 
-  // Active view tab: dashboard | briefing | simulator | benchmarking | matrix | builder
-  const [activeTab, setActiveTab] = useState<HeaderTab>('dashboard');
+  // Active view tab: boardroom | dashboard | dossier | briefing | simulator | benchmarking | matrix | builder
+  const [activeTab, setActiveTab] = useState<HeaderTab>('boardroom');
   const [isKioskOpen, setIsKioskOpen] = useState(false);
 
   // Filter state for cross-filtering across all visuals
@@ -201,27 +202,29 @@ export default function App() {
       )}
 
       {/* Top Application Ribbon Header */}
-      <PowerBIHeader
-        dataset={dataset}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onUploadClick={() => setIsUploadModalOpen(true)}
-        onDownloadTemplate={downloadOragloExcelTemplate}
-        onExportExcel={handleExportExcel}
-        onPrintReport={() => setIsPrintView(true)}
-        onResetSample={handleResetSample}
-        onSheetChange={handleSheetChange}
-        isFilterPaneOpen={isFilterPaneOpen}
-        setIsFilterPaneOpen={setIsFilterPaneOpen}
-        activeFilterCount={activeFilterCount}
-        onOpenKiosk={() => setIsKioskOpen(true)}
-      />
+      <div className="print:hidden">
+        <PowerBIHeader
+          dataset={dataset}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onUploadClick={() => setIsUploadModalOpen(true)}
+          onDownloadTemplate={downloadOragloExcelTemplate}
+          onExportExcel={handleExportExcel}
+          onPrintReport={() => setIsPrintView(true)}
+          onResetSample={handleResetSample}
+          onSheetChange={handleSheetChange}
+          isFilterPaneOpen={isFilterPaneOpen}
+          setIsFilterPaneOpen={setIsFilterPaneOpen}
+          activeFilterCount={activeFilterCount}
+          onOpenKiosk={() => setIsKioskOpen(true)}
+        />
+      </div>
 
       {/* Main Container - Full Fluid Screen Workspace */}
-      <main className="w-full px-3 sm:px-5 md:px-6 lg:px-8 xl:px-10 py-5 space-y-5 flex-1">
+      <main className="w-full px-3 sm:px-5 md:px-6 lg:px-8 xl:px-10 py-5 space-y-5 flex-1 print:p-0 print:m-0 print:w-full">
         
         {/* Dataset Scope & Filter Status Strip */}
-        <div className="bg-white rounded-xl p-3 sm:p-3.5 border border-slate-200/90 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="bg-white rounded-xl p-3 sm:p-3.5 border border-slate-200/90 shadow-2xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 print:hidden">
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 border border-amber-500/20">
               <FileSpreadsheet className="w-4 h-4" />
@@ -269,7 +272,7 @@ export default function App() {
 
         {/* Active Filters Summary Breadcrumb Strip */}
         {activeFilterCount > 0 && (
-          <div className="bg-amber-50 border border-amber-300/80 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2 shadow-2xs">
+          <div className="bg-amber-50 border border-amber-300/80 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2 shadow-2xs print:hidden">
             <div className="flex flex-wrap items-center gap-1.5">
               <div className="flex items-center gap-1.5 text-amber-950 text-xs font-black mr-1">
                 <Filter className="w-3.5 h-3.5 text-amber-600" />
@@ -316,6 +319,20 @@ export default function App() {
           {/* Main Content Workspace */}
           <div className="flex-1 space-y-5 w-full min-w-0">
             
+            {/* View Tab 0: Flagship Executive Boardroom Dark Dashboard (Driven 100% by active uploaded sheet) */}
+            {activeTab === 'boardroom' && (
+              <ExecutiveBoardroomDashboard
+                dataset={dataset}
+                columns={activeSheet?.columns || []}
+                filteredRows={filteredRows}
+                filters={filters}
+                onSelectCategoryFilter={handleSelectCategoryFilter}
+                onOpenPrintReport={() => setIsPrintView(true)}
+                onSwitchToDossierTab={() => setActiveTab('dossier')}
+                onUploadNewSheet={() => setIsUploadModalOpen(true)}
+              />
+            )}
+
             {/* View Tab 1: Full Analytics Dashboard */}
             {activeTab === 'dashboard' && (
               <>

@@ -32,10 +32,8 @@ export function downloadOragloExcelTemplate() {
       'Job Title': 'Sewing Line Supervisor A1',
       'Production Line': 'Sewing Line A1 (Shirts)',
       'Shift': 'Morning Shift',
-      'Base Salary ($)': 7500,
       'Regular Hours': 208,
       'Overtime Hours': 24,
-      'Total Working Hours': 232,
       'Present Days': 26,
       'Absent Days': 0,
       'Efficiency Rate %': 96,
@@ -54,10 +52,8 @@ export function downloadOragloExcelTemplate() {
       'Job Title': 'Single-Needle Lockstitch Operator',
       'Production Line': 'Sewing Line A1 (Shirts)',
       'Shift': 'Morning Shift',
-      'Base Salary ($)': 5200,
       'Regular Hours': 200,
       'Overtime Hours': 32,
-      'Total Working Hours': 232,
       'Present Days': 25,
       'Absent Days': 1,
       'Efficiency Rate %': 94,
@@ -76,10 +72,8 @@ export function downloadOragloExcelTemplate() {
       'Job Title': 'Cutting Room Master',
       'Production Line': 'Main Cutting Floor',
       'Shift': 'Morning Shift',
-      'Base Salary ($)': 8500,
       'Regular Hours': 208,
       'Overtime Hours': 35,
-      'Total Working Hours': 243,
       'Present Days': 26,
       'Absent Days': 0,
       'Efficiency Rate %': 98,
@@ -98,10 +92,8 @@ export function downloadOragloExcelTemplate() {
       'Job Title': 'Quality Assurance Manager (QA)',
       'Production Line': 'Total Quality Management',
       'Shift': 'Morning Shift',
-      'Base Salary ($)': 9200,
       'Regular Hours': 208,
       'Overtime Hours': 15,
-      'Total Working Hours': 223,
       'Present Days': 26,
       'Absent Days': 0,
       'Efficiency Rate %': 97,
@@ -120,10 +112,8 @@ export function downloadOragloExcelTemplate() {
       'Job Title': 'Finishing & Steam Press Supervisor',
       'Production Line': 'Steam Press & Finishing Hall',
       'Shift': 'Morning Shift',
-      'Base Salary ($)': 6800,
       'Regular Hours': 208,
       'Overtime Hours': 26,
-      'Total Working Hours': 234,
       'Present Days': 26,
       'Absent Days': 0,
       'Efficiency Rate %': 94,
@@ -142,10 +132,8 @@ export function downloadOragloExcelTemplate() {
       'Job Title': 'Export Packaging Lead',
       'Production Line': 'Carton Packing & Palletizing',
       'Shift': 'Morning Shift',
-      'Base Salary ($)': 6000,
       'Regular Hours': 208,
       'Overtime Hours': 20,
-      'Total Working Hours': 228,
       'Present Days': 26,
       'Absent Days': 0,
       'Efficiency Rate %': 95,
@@ -164,10 +152,8 @@ export function downloadOragloExcelTemplate() {
       'Job Title': 'Sewing Machine Maintenance Engineer',
       'Production Line': 'Central Workshop',
       'Shift': 'Morning Shift',
-      'Base Salary ($)': 9500,
       'Regular Hours': 208,
       'Overtime Hours': 36,
-      'Total Working Hours': 244,
       'Present Days': 26,
       'Absent Days': 0,
       'Efficiency Rate %': 96,
@@ -191,10 +177,8 @@ export function downloadOragloExcelTemplate() {
     { wch: 28 }, // Job Title
     { wch: 26 }, // Production Line
     { wch: 16 }, // Shift
-    { wch: 16 }, // Base Salary ($)
     { wch: 14 }, // Regular Hours
     { wch: 14 }, // Overtime Hours
-    { wch: 18 }, // Total Working Hours
     { wch: 12 }, // Present Days
     { wch: 12 }, // Absent Days
     { wch: 16 }, // Efficiency Rate %
@@ -217,7 +201,7 @@ export function downloadOragloExcelTemplate() {
     { 'Field': 'Standard Shifts', 'Value / Description': VALID_SHIFTS.join(' | ') },
     { 'Field': 'Contract Types', 'Value / Description': VALID_CONTRACTS.join(' | ') },
     { 'Field': 'Employment Statuses', 'Value / Description': VALID_STATUSES.join(' | ') },
-    { 'Field': 'Working Hours Formula', 'Value / Description': 'Regular Hours = Present Days * 8; Total Working Hours = Regular Hours + Overtime Hours' },
+    { 'Field': 'Working Hours Formula', 'Value / Description': 'Regular Hours = Present Days * 8; Overtime Hours logged per production shift' },
   ];
 
   const ws2 = XLSX.utils.json_to_sheet(guideData);
@@ -484,10 +468,8 @@ export function exportCurrentDataToExcel(employees: Employee[], filename = 'Orag
     'Job Title': emp.jobTitle,
     'Production Line': emp.line,
     'Shift': emp.shift,
-    'Base Salary ($)': emp.baseSalary,
     'Regular Hours': emp.regularHours ?? (emp.presentDays * 8),
     'Overtime Hours': emp.overtimeHours,
-    'Total Working Hours': emp.totalHoursWorked ?? ((emp.regularHours ?? (emp.presentDays * 8)) + emp.overtimeHours),
     'Absent Days': emp.absentDays,
     'Present Days': emp.presentDays,
     'Efficiency Rate %': emp.efficiencyRate,

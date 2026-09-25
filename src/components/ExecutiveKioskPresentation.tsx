@@ -224,7 +224,7 @@ export function ExecutiveKioskPresentation({
             </div>
           </div>
 
-          {/* Hero Metric 2: Total Working Hours */}
+          {/* Hero Metric 2: Total Operating Hours */}
           <div className="bg-slate-900/80 p-5 rounded-2xl border border-slate-800 shadow-xl space-y-2 relative overflow-hidden group hover:border-amber-500/50 transition">
             <div className="flex items-center justify-between text-xs text-slate-400 font-bold uppercase tracking-wider">
               <span>Total Operating Hours</span>

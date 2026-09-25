@@ -28,21 +28,26 @@
 @media print {
   @page {
     size: auto;
-    margin: 6mm 8mm 8mm 8mm;
+    margin: 5mm;
   }
-  body, html {
+
+  /* Universal print hides */
+  .no-print,
+  .print\:hidden {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+
+  /* 1. Formal White Dossier Report Sheet */
+  body:has(#printable-report-sheet) {
     background: #ffffff !important;
     color: #0f172a !important;
     font-size: 11pt !important;
     line-height: 1.35 !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .print-only {
-    display: block !important;
   }
   #printable-report-sheet {
     box-shadow: none !important;
@@ -52,22 +57,137 @@
     max-width: 100% !important;
     width: 100% !important;
   }
-  table {
+  #printable-report-sheet table {
     page-break-inside: auto;
     width: 100% !important;
     border-collapse: collapse !important;
     font-size: 10.5pt !important;
   }
-  th, td {
+  #printable-report-sheet th,
+  #printable-report-sheet td {
     padding: 6px 8px !important;
     font-size: 10.5pt !important;
   }
-  th {
+  #printable-report-sheet th {
     background-color: #0f172a !important;
     color: #ffffff !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+
+  /* 2. Flagship Executive Boardroom Dark Dashboard */
+  body:has(#boardroom-dashboard-print-root) {
+    background-color: #0a0d14 !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #boardroom-dashboard-print-root {
+    background-color: #0a0d14 !important;
+    color: #ffffff !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  #boardroom-dashboard-print-root * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  #boardroom-dashboard-print-root aside {
+    display: none !important;
+  }
+  #boardroom-dashboard-print-root table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    page-break-inside: auto;
+  }
+  #boardroom-dashboard-print-root tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Ensure charts and shapes (الأشكال والرسوم البيانية) maintain their sizes and display in print */
+  #boardroom-dashboard-print-root .recharts-responsive-container,
+  .recharts-responsive-container {
+    width: 100% !important;
+    min-width: 100% !important;
+    height: 220px !important;
+    min-height: 220px !important;
+    display: block !important;
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  #boardroom-dashboard-print-root .recharts-wrapper,
+  .recharts-wrapper {
+    width: 100% !important;
+    min-width: 100% !important;
+    height: 220px !important;
+    min-height: 220px !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+  #boardroom-dashboard-print-root .recharts-surface,
+  #boardroom-dashboard-print-root svg,
+  svg {
+    overflow: visible !important;
+    display: inline-block !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  svg path, svg rect, svg circle, svg line, svg polyline {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Official Signatures Print Styling - High Contrast, Always Visible, Never White-on-White */
+  .signature-card,
+  [data-signature-block] .signature-card,
+  .sig-card,
+  .sig-box {
+    background-color: #ffffff !important;
+    border: 2px solid #000000 !important;
+    border-radius: 8px !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+  }
+  .signature-card .sig-title,
+  .sig-title {
+    color: #1e293b !important;
+    font-weight: 800 !important;
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .signature-card .sig-name,
+  .sig-name {
+    color: #000000 !important;
+    font-weight: 900 !important;
+    font-size: 13px !important;
+    border-top: 2.5px solid #dc2626 !important;
+    padding-top: 6px !important;
+    text-transform: uppercase !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .signature-card .sig-dept,
+  .sig-dept {
+    color: #475569 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Common table & break utilities */
   tr {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
@@ -82,7 +202,8 @@
     break-inside: avoid !important;
     page-break-inside: avoid !important;
   }
-  /* Enhance readability in print: enlarge headings and key numbers */
+
+  /* Headings & key numbers */
   h1 { font-size: 16pt !important; }
   h2 { font-size: 13pt !important; }
   h3 { font-size: 12pt !important; }

@@ -360,7 +360,6 @@ export function PowerBIPrintReport({
         <td style="padding: 8px 10px; border: 1px solid #cbd5e1; text-align: center; font-weight: 700;">${d.shift1Count > 0 ? d.shift1Count : '-'}</td>
         <td style="padding: 8px 10px; border: 1px solid #cbd5e1; text-align: center; font-weight: 700;">${d.shift2Count > 0 ? d.shift2Count : '-'}</td>
         <td style="padding: 8px 10px; border: 1px solid #cbd5e1; text-align: center; font-weight: 800; color: #e11d48;">${d.shift3Count > 0 ? d.shift3Count : '-'}</td>
-        ${hasSalary ? `<td style="padding: 8px 10px; border: 1px solid #cbd5e1; text-align: right; font-weight: 800; color: #059669;">$${d.totalSalary.toLocaleString('en-US')}</td>` : ''}
       </tr>`
       )
       .join('');
@@ -599,6 +598,57 @@ export function PowerBIPrintReport({
     </div>
   </div>
 
+  <div style="margin: 18px 0 8px 0; border-bottom: 2px solid #0f172a; padding-bottom: 4px; display: flex; justify-content: space-between; align-items: flex-end;">
+    <h3 style="font-size: 13px; font-weight: 900; color: #0f172a; text-transform: uppercase; margin: 0;">
+      3. Comparative Department Overtime Hours Breakdown (Shift 1 vs Shift 2 vs Shift 3)
+    </h3>
+    <span style="font-size: 10.5px; font-weight: bold; color: #475569;">Audited Hours by Shift Tier</span>
+  </div>
+
+  <table style="margin-bottom: 16px;">
+    <thead>
+      <tr>
+        <th style="width: 28px; text-align: center;">#</th>
+        <th>Department / Section</th>
+        <th class="num">Headcount</th>
+        <th class="num" style="background: #78350f; color: #fde68a;">Shift 1 (2.0h)</th>
+        <th class="num" style="background: #92400e; color: #fef3c7;">Shift 2 (4.5h)</th>
+        <th class="num" style="background: #9f1239; color: #ffe4e6;">Shift 3 (>4.5h)</th>
+        <th class="num" style="background: #0f172a; color: #fbbf24;">Total OT Hours</th>
+        <th class="num">% Plant OT</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${deptSummaries.map((dept, idx) => `
+        <tr>
+          <td style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: center; color: #475569; font-weight: 700;">${idx + 1}</td>
+          <td style="padding: 6px 8px; border: 1px solid #cbd5e1; font-weight: 800; color: #0f172a;">${dept.department}</td>
+          <td style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: right; font-weight: 700;">${dept.headcount}</td>
+          <td style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: right; font-weight: 800; color: #b45309; background: #fffbeb;">+${dept.shift1Hours}h</td>
+          <td style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: right; font-weight: 800; color: #92400e; background: #fef3c7;">+${dept.shift2Hours}h</td>
+          <td style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: right; font-weight: 900; color: #be123c; background: #fff1f2;">+${dept.shift3Hours}h</td>
+          <td style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: right; font-weight: 900; color: #0f172a; background: #fef3c7;">+${dept.overtimeHours}h</td>
+          <td style="padding: 6px 8px; border: 1px solid #cbd5e1; text-align: right; font-weight: 700;">${totalOvertimeHours > 0 ? ((dept.overtimeHours / totalOvertimeHours) * 100).toFixed(1) : 0}%</td>
+        </tr>
+      `).join('')}
+      <tr style="background: #e2e8f0; font-weight: 900; border-top: 3px solid #0f172a; font-size: 12px;">
+        <td colspan="2" style="padding: 7px 8px; border: 1px solid #cbd5e1;">PLANT OVERTIME TOTALS</td>
+        <td style="padding: 7px 8px; border: 1px solid #cbd5e1; text-align: right;">${totalHeadcount.toLocaleString('en-US')}</td>
+        <td style="padding: 7px 8px; border: 1px solid #cbd5e1; text-align: right; color: #b45309;">+${overtimeShiftAnalysis.shift1.hours.toLocaleString('en-US')}h</td>
+        <td style="padding: 7px 8px; border: 1px solid #cbd5e1; text-align: right; color: #92400e;">+${overtimeShiftAnalysis.shift2.hours.toLocaleString('en-US')}h</td>
+        <td style="padding: 7px 8px; border: 1px solid #cbd5e1; text-align: right; color: #be123c;">+${overtimeShiftAnalysis.shift3.hours.toLocaleString('en-US')}h</td>
+        <td style="padding: 7px 8px; border: 1px solid #cbd5e1; text-align: right; color: #0f172a;">+${totalOvertimeHours.toLocaleString('en-US')}h</td>
+        <td style="padding: 7px 8px; border: 1px solid #cbd5e1; text-align: right;">100%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin: 18px 0 8px 0; border-bottom: 2px solid #0f172a; padding-bottom: 4px;">
+    <h3 style="font-size: 13px; font-weight: 900; color: #0f172a; text-transform: uppercase; margin: 0;">
+      4. Detailed Operational Sections & Headcount Roster
+    </h3>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -610,7 +660,6 @@ export function PowerBIPrintReport({
         <th class="center">Shift 1 (2h)</th>
         <th class="center">Shift 2 (4.5h)</th>
         <th class="center">Shift 3 (>4.5h)</th>
-        ${hasSalary ? '<th class="num">Payroll ($)</th>' : ''}
       </tr>
     </thead>
     <tbody>
@@ -623,15 +672,18 @@ export function PowerBIPrintReport({
         <td style="padding: 8px 10px; border: 1px solid #cbd5e1; text-align: center;">${overtimeShiftAnalysis.shift1.count}</td>
         <td style="padding: 8px 10px; border: 1px solid #cbd5e1; text-align: center;">${overtimeShiftAnalysis.shift2.count}</td>
         <td style="padding: 8px 10px; border: 1px solid #cbd5e1; text-align: center; color: #e11d48;">${overtimeShiftAnalysis.shift3.count}</td>
-        ${hasSalary ? `<td style="padding: 8px 10px; border: 1px solid #cbd5e1; text-align: right; color: #059669;">$${totalPayroll.toLocaleString('en-US')}</td>` : ''}
       </tr>
     </tbody>
   </table>
 
-  <div class="sig-container">
+  <div class="sig-container" style="display: flex; justify-content: space-around; margin-top: 30px; text-align: center;">
     <div class="sig-box">
       DATA ANALYST<br>
       <span style="font-size: 12px; font-weight: 900; color: #0f172a; margin-top: 5px; display: block;">MINA RAFAT</span>
+    </div>
+    <div class="sig-box">
+      HR MANAGER<br>
+      <span style="font-size: 12px; font-weight: 900; color: black; margin-top: 5px; display: block;">MARWA RAMADAN</span>
     </div>
     <div class="sig-box">
       HR GROUP MANAGER<br>
@@ -1329,8 +1381,53 @@ export function PowerBIPrintReport({
               </ResponsiveContainer>
             </div>
 
+            {/* DIRECT USER REQUIREMENT: Detailed Comparative Department Overtime Hours Breakdown Table */}
+            <div className="mt-3 overflow-x-auto bg-white rounded-lg border border-slate-300 shadow-2xs">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="bg-slate-900 text-white font-mono text-[10.5px]">
+                    <th className="p-2 text-center w-8">#</th>
+                    <th className="p-2">Department / Operational Section</th>
+                    <th className="p-2 text-right">Headcount</th>
+                    <th className="p-2 text-right text-amber-300 bg-amber-950/40">Shift 1 (2.0h)</th>
+                    <th className="p-2 text-right text-amber-400 bg-amber-900/40">Shift 2 (4.5h)</th>
+                    <th className="p-2 text-right text-rose-300 bg-rose-950/40">Shift 3 (&gt;4.5h)</th>
+                    <th className="p-2 text-right font-black text-amber-200">Total OT Hours</th>
+                    <th className="p-2 text-right">% Plant OT</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200 text-slate-800">
+                  {deptSummaries.map((dept, index) => {
+                    const plantShare = totalOvertimeHours > 0 ? ((dept.overtimeHours / totalOvertimeHours) * 100).toFixed(1) : '0';
+                    return (
+                      <tr key={dept.department} className="hover:bg-amber-50/50 transition">
+                        <td className="p-2 text-center font-mono text-slate-500 font-bold">{index + 1}</td>
+                        <td className="p-2 font-bold text-slate-900">{dept.department}</td>
+                        <td className="p-2 text-right font-mono font-semibold">{dept.headcount}</td>
+                        <td className="p-2 text-right font-mono font-bold text-amber-800 bg-amber-50/50">+{dept.shift1Hours}h</td>
+                        <td className="p-2 text-right font-mono font-bold text-amber-900 bg-amber-100/40">+{dept.shift2Hours}h</td>
+                        <td className="p-2 text-right font-mono font-black text-rose-700 bg-rose-50/50">+{dept.shift3Hours}h</td>
+                        <td className="p-2 text-right font-mono font-black text-amber-900 bg-amber-100/70">+{dept.overtimeHours}h</td>
+                        <td className="p-2 text-right font-mono font-semibold text-slate-600">{plantShare}%</td>
+                      </tr>
+                    );
+                  })}
+                  {/* Totals Summary Row */}
+                  <tr className="bg-slate-200/90 font-black text-slate-950 border-t-2 border-slate-400">
+                    <td colSpan={2} className="p-2 text-slate-900 font-bold uppercase">PLANT OVERTIME TOTALS</td>
+                    <td className="p-2 text-right font-mono">{totalHeadcount.toLocaleString('en-US')}</td>
+                    <td className="p-2 text-right font-mono text-amber-900 bg-amber-100/80">+{overtimeShiftAnalysis.shift1.hours.toLocaleString('en-US')}h</td>
+                    <td className="p-2 text-right font-mono text-amber-950 bg-amber-200/80">+{overtimeShiftAnalysis.shift2.hours.toLocaleString('en-US')}h</td>
+                    <td className="p-2 text-right font-mono text-rose-900 bg-rose-100/80">+{overtimeShiftAnalysis.shift3.hours.toLocaleString('en-US')}h</td>
+                    <td className="p-2 text-right font-mono text-amber-950 bg-amber-200">+{totalOvertimeHours.toLocaleString('en-US')}h</td>
+                    <td className="p-2 text-right font-mono">100%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
             {/* Department Hours Quick Summary Strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-200 text-center text-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-slate-200 text-center text-xs mt-2">
               {departmentHoursComparisonData.slice(0, 4).map((d) => (
                 <div key={d.fullName} className="p-1.5 bg-white rounded border border-slate-200">
                   <span className="font-bold text-slate-800 block truncate text-[11px]">{d.fullName}</span>
@@ -1387,7 +1484,6 @@ export function PowerBIPrintReport({
                     <th className="p-2 text-center text-xs font-bold">Shift 1 (2h)</th>
                     <th className="p-2 text-center text-xs font-bold">Shift 2 (4.5h)</th>
                     <th className="p-2 text-center text-xs font-bold">Shift 3 (&gt;4.5h)</th>
-                    {hasSalary && <th className="p-2 text-right text-xs font-bold">Payroll ($)</th>}
                     <th className="p-2 text-center text-xs font-bold">Status</th>
                   </tr>
                 </thead>
@@ -1425,11 +1521,6 @@ export function PowerBIPrintReport({
                         <td className="p-2 text-center font-mono font-black text-rose-700">
                           {dept.shift3Count > 0 ? dept.shift3Count : '-'}
                         </td>
-                        {hasSalary && (
-                          <td className="p-2 text-right font-mono font-bold text-emerald-800">
-                            ${dept.totalSalary.toLocaleString('en-US')}
-                          </td>
-                        )}
                         <td className="p-2 text-center">
                           <span className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-bold ${
                             dept.shift3Count > 0
@@ -1466,11 +1557,6 @@ export function PowerBIPrintReport({
                     <td className="p-2 text-center font-mono font-black text-rose-800">
                       {overtimeShiftAnalysis.shift3.count}
                     </td>
-                    {hasSalary && (
-                      <td className="p-2 text-right font-mono text-emerald-950 font-black">
-                        ${totalPayroll.toLocaleString('en-US')}
-                      </td>
-                    )}
                     <td className="p-2 text-center font-mono font-black text-emerald-800">
                       100% VERIFIED
                     </td>
@@ -1560,14 +1646,14 @@ export function PowerBIPrintReport({
             </section>
           )}
 
-          {/* VII. Formal Executive Sign-off Block (Mina: DATA ANALYST / Bora Ertürk: HR GROUP MANAGER) */}
+          {/* VII. Formal Executive Sign-off Block (Mina: DATA ANALYST / Marwa Ramadan: HR MANAGER / Bora Ertürk: HR GROUP MANAGER) */}
           {showSignatures && (
-            <footer className="pt-6 mt-5 border-t-2 border-slate-300 grid grid-cols-2 gap-8 text-center text-xs page-break-inside-avoid">
+            <footer className="pt-6 mt-5 border-t-2 border-slate-300 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center text-xs page-break-inside-avoid">
               <div>
                 <span className="block text-slate-500 font-bold mb-7 text-xs uppercase tracking-wider">
                   DATA ANALYST
                 </span>
-                <div className="border-t-2 border-slate-900 pt-2 max-w-[220px] mx-auto">
+                <div className="border-t-2 border-slate-900 pt-2 max-w-[200px] mx-auto">
                   <span className="font-black text-slate-950 block text-xs sm:text-sm tracking-wider uppercase">MINA RAFAT</span>
                   <span className="text-[10px] text-slate-600 block font-mono font-bold uppercase mt-0.5">DATA ANALYST</span>
                 </div>
@@ -1575,9 +1661,19 @@ export function PowerBIPrintReport({
 
               <div>
                 <span className="block text-slate-500 font-bold mb-7 text-xs uppercase tracking-wider">
+                  HR MANAGER
+                </span>
+                <div className="border-t-2 border-slate-900 pt-2 max-w-[200px] mx-auto">
+                  <span className="font-black text-slate-950 block text-xs sm:text-sm tracking-wider uppercase">MARWA RAMADAN</span>
+                  <span className="text-[10px] text-slate-600 block font-mono font-bold uppercase mt-0.5">HR MANAGER</span>
+                </div>
+              </div>
+
+              <div>
+                <span className="block text-slate-500 font-bold mb-7 text-xs uppercase tracking-wider">
                   HR GROUP MANAGER
                 </span>
-                <div className="border-t-2 border-slate-900 pt-2 max-w-[220px] mx-auto">
+                <div className="border-t-2 border-slate-900 pt-2 max-w-[200px] mx-auto">
                   <span className="font-black text-slate-950 block text-xs sm:text-sm tracking-wider uppercase">BORA ERTÜRK</span>
                   <span className="text-[10px] text-slate-600 block font-mono font-bold uppercase mt-0.5">HR GROUP MANAGER</span>
                 </div>

@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { UniversalDataset } from '../types/powerbi';
 
-export type HeaderTab = 'dashboard' | 'dossier' | 'briefing' | 'simulator' | 'benchmarking' | 'matrix' | 'builder';
+export type HeaderTab = 'boardroom' | 'dashboard' | 'dossier' | 'briefing' | 'simulator' | 'benchmarking' | 'matrix' | 'builder';
 
 interface PowerBIHeaderProps {
   dataset: UniversalDataset;
@@ -203,6 +203,22 @@ export function PowerBIHeader({
           {/* Tabs Group */}
           <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             
+            {/* Tab 0: Executive Boardroom Dark Dashboard (High-end layout driven 100% by active sheet) */}
+            <button
+              id="tab-boardroom"
+              onClick={() => setActiveTab('boardroom')}
+              className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition cursor-pointer ${
+                activeTab === 'boardroom'
+                  ? 'bg-[#E50914] text-white font-black shadow-md shadow-red-500/25 ring-1 ring-red-400'
+                  : 'text-red-400 hover:text-white hover:bg-red-950/40 font-bold border border-red-500/30'
+              }`}
+              title="Executive Boardroom Dashboard with Shift 1 vs 2 vs 3 Breakdown"
+            >
+              <Sparkles className="w-3.5 h-3.5 fill-current" />
+              <span>Executive Boardroom</span>
+              <span className="text-[9px] bg-red-950 text-red-200 px-1 rounded uppercase font-mono">PRO</span>
+            </button>
+
             {/* Tab 1: Executive Dashboard */}
             <button
               id="tab-dashboard"
@@ -214,7 +230,7 @@ export function PowerBIHeader({
               }`}
             >
               <LayoutGrid className="w-3.5 h-3.5" />
-              <span>Executive Dashboard</span>
+              <span>Operational Grid</span>
             </button>
 
             {/* Tab 2: Manager Boardroom Dossier & Print */}

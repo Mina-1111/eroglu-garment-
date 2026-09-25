@@ -102,8 +102,8 @@ export function PowerBIVisualsGrid({
     return aggregateDataForVisual(filteredRows, primaryDimCol, primaryMeasureCol, mainAggType);
   }, [filteredRows, primaryDimCol, primaryMeasureCol, mainAggType]);
 
-  // Metric selector for department breakdown visual: headcount | hours | overtime
-  const [deptMetricType, setDeptMetricType] = useState<'headcount' | 'hours' | 'overtime'>('headcount');
+  // Metric selector for department breakdown visual: overtime | headcount | hours
+  const [deptMetricType, setDeptMetricType] = useState<'overtime' | 'headcount' | 'hours'>('overtime');
 
   // Exact departmental summaries using universal parser
   const departmentSummaries = useMemo(() => {
@@ -117,10 +117,9 @@ export function PowerBIVisualsGrid({
       value: deptMetricType === 'headcount'
         ? d.headcount
         : deptMetricType === 'hours'
-        ? d.totalWorkingHours
+        ? d.regularHours
         : d.overtimeHours,
       headcount: d.headcount,
-      totalWorkingHours: d.totalWorkingHours,
       regularHours: d.regularHours,
       overtimeHours: d.overtimeHours,
       sharePercentage: d.sharePercentage,
@@ -391,7 +390,7 @@ export function PowerBIVisualsGrid({
                 </div>
                 <div>
                   <h3 className="text-xs font-bold text-slate-800">
-                    Department Breakdown: {deptMetricType === 'headcount' ? 'Headcount (Individuals)' : deptMetricType === 'hours' ? 'Total Working Hours' : 'Overtime Hours'}
+                    Department Breakdown: {deptMetricType === 'headcount' ? 'Headcount (Individuals)' : deptMetricType === 'hours' ? 'Regular Base Hours' : 'Overtime Hours'}
                   </h3>
                   <span className="text-[10px] text-slate-400">
                     Exact breakdown across {departmentSummaries.length} active divisions ({filteredRows.length} total staff)
@@ -401,6 +400,17 @@ export function PowerBIVisualsGrid({
 
               {/* Metric Type Switcher */}
               <div className="flex items-center bg-slate-100 p-0.5 rounded-lg text-[10px] font-medium self-start sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => setDeptMetricType('overtime')}
+                  className={`px-2 py-0.5 rounded transition ${
+                    deptMetricType === 'overtime'
+                      ? 'bg-amber-500 text-slate-950 font-bold shadow-2xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  Overtime
+                </button>
                 <button
                   type="button"
                   onClick={() => setDeptMetricType('headcount')}
@@ -421,18 +431,7 @@ export function PowerBIVisualsGrid({
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Total Hours
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setDeptMetricType('overtime')}
-                  className={`px-2 py-0.5 rounded transition ${
-                    deptMetricType === 'overtime'
-                      ? 'bg-amber-500 text-slate-950 font-bold shadow-2xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  Overtime
+                  Regular Hours
                 </button>
               </div>
             </div>
@@ -461,9 +460,8 @@ export function PowerBIVisualsGrid({
                               <p className="font-bold text-amber-400">{d.category}</p>
                               <div className="text-[11px] text-slate-200 border-t border-slate-700 pt-1 space-y-0.5">
                                 <p>• Headcount: <strong className="text-white font-mono">{d.headcount} staff</strong> ({d.sharePercentage}%)</p>
-                                <p>• Total Working Hours: <strong className="text-sky-300 font-mono">{d.totalWorkingHours.toLocaleString('en-US')} hrs</strong></p>
-                                <p>• Regular Base Hours: <strong className="text-slate-300 font-mono">{d.regularHours.toLocaleString('en-US')} hrs</strong></p>
                                 <p>• Overtime Hours: <strong className="text-amber-300 font-mono">{d.overtimeHours.toLocaleString('en-US')} hrs</strong></p>
+                                <p>• Regular Base Hours: <strong className="text-slate-300 font-mono">{d.regularHours.toLocaleString('en-US')} hrs</strong></p>
                               </div>
                             </div>
                           );
